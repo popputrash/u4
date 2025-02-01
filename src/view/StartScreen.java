@@ -1,5 +1,4 @@
 package view;
-
 import javax.swing.*;
 import java.awt.*;
 
@@ -11,7 +10,7 @@ public class StartScreen extends JPanel {
     JButton btnStart;
     JLabel mainTitle;
     JPanel highScrScrn;
-    JList<String> highScores = new JList<>();;
+    JList<String> highScores = new JList<>();
     JLabel highScoreTile;
 
     public StartScreen(int width, int height, Window window){
@@ -27,6 +26,10 @@ public class StartScreen extends JPanel {
         btnSetUp();
         setUp();
     }
+    /**
+     * Metod för att skapa diverse knappar som finns på startskärmen
+     * @author Elias Brännström
+     */
     private void btnSetUp(){
         btnQuit = new JButton("AVSLUTA SPEL");
         btnQuit.setEnabled(true);
@@ -50,6 +53,10 @@ public class StartScreen extends JPanel {
         this.add(btnStart);
     }
 
+    /**
+     * Metod för att skapa diverse element som finns på startskärmen
+     * @author Elias Brännström
+     */
     public void setUp(){
 
 
@@ -84,7 +91,7 @@ public class StartScreen extends JPanel {
         highScores.setLocation(20,20);
         highScores.setEnabled(false);
 
-        // Add all elements
+        // Add all elements to StartScreen panel
         highScrScrn.add(highScoreTile);
         highScrScrn.add(highScores);
         this.add(highScrScrn);

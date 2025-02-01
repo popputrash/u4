@@ -26,14 +26,14 @@ public class EndScreen extends JPanel {
         // Game Over
         gameOver = new JLabel("GAME OVER");
         gameOver.setSize(300,50);
-        gameOver.setLocation(100,50);
+        gameOver.setLocation(150,50);
         gameOver.setForeground(Color.red.darker());
         gameOver.setFont(window.getSubTitleFont());
         this.add(gameOver);
 
         // Enter winner name
         enterWinner = new JTextField("Enter winner");
-        enterWinner.setSize(400,100);
+        enterWinner.setSize(200,100);
         enterWinner.setLocation(150,100);
         enterWinner.setFont(window.getBtnFont());
         enterWinner.setBackground(Color.DARK_GRAY.darker());

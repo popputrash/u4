@@ -30,7 +30,7 @@ public class Controller {
                 break;
             case NEWGAMEBUTTON:
                 System.out.println("new game");
-                window.setEndScreen();
+                //window.setEndScreen();
         }
 
     }
