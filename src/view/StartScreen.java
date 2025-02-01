@@ -9,7 +9,7 @@ public class StartScreen extends JPanel {
     JButton btnQuit;
     JButton btnStart;
     JLabel mainTitle;
-    JPanel highScrScrn;
+    JPanel highScorePanel;
     JList<String> highScores = new JList<>();
     JLabel highScoreTile;
 
@@ -31,7 +31,7 @@ public class StartScreen extends JPanel {
      * @author Elias Brännström
      */
     private void btnSetUp(){
-        btnQuit = new JButton("AVSLUTA SPEL");
+        btnQuit = new JButton("AVSLUTA");
         btnQuit.setEnabled(true);
         btnQuit.setSize(150,20);
         btnQuit.setLocation(95,400);
@@ -69,10 +69,10 @@ public class StartScreen extends JPanel {
 
 
         // High score screen background
-        highScrScrn = new JPanel(null);
-        highScrScrn.setSize(200,250);
-        highScrScrn.setLocation(150,130);
-        highScrScrn.setBackground(Color.DARK_GRAY.darker());
+        highScorePanel = new JPanel(null);
+        highScorePanel.setSize(200,250);
+        highScorePanel.setLocation(150,130);
+        highScorePanel.setBackground(Color.DARK_GRAY.darker());
 
 
         // High score screen label
@@ -92,9 +92,9 @@ public class StartScreen extends JPanel {
         highScores.setEnabled(false);
 
         // Add all elements to StartScreen panel
-        highScrScrn.add(highScoreTile);
-        highScrScrn.add(highScores);
-        this.add(highScrScrn);
+        highScorePanel.add(highScoreTile);
+        highScorePanel.add(highScores);
+        this.add(highScorePanel);
         this.add(mainTitle);
     }
 

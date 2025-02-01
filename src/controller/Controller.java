@@ -1,16 +1,14 @@
-package Controller;
-
+package controller;
 import view.*;
-
-import java.sql.SQLOutput;
+import model.*;
 
 public class Controller {
     final private Window window;
-    private String[] highScores;
+    private ScoreItem[] highScores;
 
     public Controller(){
         window = new Window("Skattjakt", this);
-        highScores = new String[5];
+        highScores = new ScoreItem[5];
 
     }
     public void btnPressed(ButtonType button){
@@ -30,9 +28,22 @@ public class Controller {
                 break;
             case NEWGAMEBUTTON:
                 System.out.println("new game");
-                //window.setEndScreen();
+                window.setEndScreen(); // inte korrekt, bara för test
         }
+    }
+    public void addHighScore(String name, int score){
+        ScoreItem tempScoreItem;
+        for(int i = 0; 0 < highScores.length; i++){
+            if(score > highScores[i].getScore()){
+                tempScoreItem = highScores[i];
+                highScores[i] = new ScoreItem(score,name);
+                // lägg till lite mer loopar för att justera listan
 
+                return;
+
+
+            }
+        }
     }
 
 }

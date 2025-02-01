@@ -32,8 +32,8 @@ public class EndScreen extends JPanel {
         this.add(gameOver);
 
         // Enter winner name
-        enterWinner = new JTextField("Enter winner");
-        enterWinner.setSize(200,100);
+        enterWinner = new JTextField("");
+        enterWinner.setSize(200,50);
         enterWinner.setLocation(150,100);
         enterWinner.setFont(window.getBtnFont());
         enterWinner.setBackground(Color.DARK_GRAY.darker());

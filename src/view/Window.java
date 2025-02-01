@@ -1,5 +1,5 @@
 package view;
-import Controller.Controller;
+import controller.Controller;
 import javax.swing.*;
 import java.awt.*;
 
@@ -16,30 +16,26 @@ public class Window extends JFrame {
     public Window(String title, Controller controller){
         super(title);
         this.controller = controller;
-        this.setVisible(true);
-        this.setSize(500,500);
-        this.setResizable(false);
+        setVisible(true);
+        setSize(500,500);
+        setResizable(false);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         startScreen = new StartScreen(500,500, this);
         gameScreen = new GameScreen(500,500, this);
         EndScreen = new EndScreen(500,500, this);
 
         currentScreen = startScreen;
-        this.add(currentScreen);
-
-
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        add(currentScreen);
     }
-    public Font getTileFont(){
-        return titleFont;
-    }
-    public Font getBtnFont(){
-        return btnFont;
-    }
+    public Font getTileFont(){return titleFont;}
+    public Font getBtnFont(){return btnFont;}
     public Font getSubTitleFont(){return subTitleFont;}
+
     public void btnPressed(ButtonType button){
         controller.btnPressed(button);
     }
+
     public void setGameScreen(){
 
         this.remove(currentScreen);
@@ -63,11 +59,13 @@ public class Window extends JFrame {
         this.add(currentScreen);
         this.repaint();
     }
+
     private void setCurrentScreen(JPanel screen){
         currentScreen = screen;
-
     }
     public void setWindowSize(int width, int height){
         this.setSize(width,height);
     }
+
+
 }
