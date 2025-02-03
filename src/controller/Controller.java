@@ -32,16 +32,17 @@ public class Controller {
         }
     }
     public void addHighScore(String name, int score){
-        ScoreItem tempScoreItem;
+        ScoreItem tempHighScoreItem;
+        ScoreItem tempsScore;
         for(int i = 0; 0 < highScores.length; i++){
             if(score > highScores[i].getScore()){
-                tempScoreItem = highScores[i];
+                tempHighScoreItem = highScores[i];
                 highScores[i] = new ScoreItem(score,name);
+
                 // lägg till lite mer loopar för att justera listan
 
+
                 return;
-
-
             }
         }
     }
