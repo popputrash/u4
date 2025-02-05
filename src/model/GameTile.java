@@ -2,7 +2,12 @@ package model;
 
 
 import javax.swing.*;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.LineBorder;
+import javax.swing.border.TitledBorder;
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 /**
  * Tänker att varje möjlig spelruta ärver denna klass.
@@ -11,19 +16,17 @@ import java.awt.*;
 public abstract class GameTile extends JPanel {
     Color color;
     JLabel text;
-    int height = 70, width = 70;
 
     public GameTile(Color color, String text){
         this.color = color;
         this.text = new JLabel(text);
-        this.text.setSize(width,height);
-        this.text.setVisible(false);
         add(this.text);
+        setBackground(Color.red.darker());
+        setBorder(new LineBorder(Color.yellow));
     }
-
     public void reveal(){
         text.setVisible(true);
         setBackground(color);
-
     }
+
 }

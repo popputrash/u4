@@ -1,20 +1,24 @@
 package view;
 
+import model.GameTile;
 import model.TreasureTile;
 
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 public class GameScreen extends JPanel {
     Window window;
     JLabel mainTitle, pOne, pTwo;
     JPanel gamePanel, pOnePanel,pTwoPanel;
     JButton btnMenu, btnNewGame;
+    GameTile[] gameTiles = new GameTile[100];
 
-    JButton[] test = new JButton[100];
 
     public GameScreen(int width, int height, Window window){
+
 
         super(null);
         this.setSize(width, height);
@@ -91,16 +95,27 @@ public class GameScreen extends JPanel {
         this.add(pTwoPanel);
 
         setup();
+        gamePanel.addMouseListener(new MouseListener() {
 
+            public void mouseClicked(MouseEvent e) {
+                int index = (10*(e.getY() / 70) + (e.getX()/70));
+                System.out.print("x: " + e.getX()/70);
+                System.out.print(", y: " + e.getY()/70);
+                System.out.println(", total position: " + index);
+                gameTiles[index].reveal();
+
+            }
+            public void mousePressed(MouseEvent e) {}
+            public void mouseReleased(MouseEvent e) {}
+            public void mouseEntered(MouseEvent e) {}
+            public void mouseExited(MouseEvent e) {}
+        });
     }
     public void setup(){
-
-        for (int i = 0; i < test.length; i++) {
-            test[i] = new JButton();
-            test[i].setBackground(Color.white);
-            gamePanel.add(test[i]);
+        for (int i = 0; i < 100; i++) {
+            gameTiles[i] = new TreasureTile();
+            gamePanel.add(gameTiles[i]);
         }
-
     }
 
 }
