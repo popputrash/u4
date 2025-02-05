@@ -67,5 +67,9 @@ public class Window extends JFrame {
         this.setSize(width,height);
     }
 
+    public void populateGamePanel(){
+
+    }
+
 
 }

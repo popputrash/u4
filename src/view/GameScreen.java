@@ -1,6 +1,9 @@
 package view;
 
+import model.TreasureTile;
+
 import javax.swing.*;
+import javax.swing.border.BevelBorder;
 import java.awt.*;
 
 public class GameScreen extends JPanel {
@@ -9,6 +12,7 @@ public class GameScreen extends JPanel {
     JPanel gamePanel, pOnePanel,pTwoPanel;
     JButton btnMenu, btnNewGame;
 
+    JButton[] test = new JButton[100];
 
     public GameScreen(int width, int height, Window window){
 
@@ -18,10 +22,6 @@ public class GameScreen extends JPanel {
         this.setBackground(Color.black);
         this.setLocation(0,0);
 
-        setUp();
-
-    }
-    private void setUp(){
         // Titel
         mainTitle = new JLabel("SKATTJAKT!");
         mainTitle.setSize(300,50);
@@ -31,11 +31,12 @@ public class GameScreen extends JPanel {
         this.add(mainTitle);
 
         //Game Board Panel
-        gamePanel = new JPanel(null);
+        gamePanel = new JPanel(new GridLayout(10,10));
         gamePanel.setSize(700,700);
         gamePanel.setLocation(45,55);
         gamePanel.setBackground(Color.DARK_GRAY.darker());
         this.add(gamePanel);
+
 
         //Main menu button
         btnMenu = new JButton("HUVUDMENY");
@@ -58,9 +59,6 @@ public class GameScreen extends JPanel {
         btnNewGame.setForeground(Color.BLACK);
         btnNewGame.addActionListener(l -> window.btnPressed(ButtonType.NEWGAMEBUTTON));
         this.add(btnNewGame);
-
-
-
 
         //Stat panel player 1
         pOnePanel = new JPanel(null);
@@ -92,5 +90,17 @@ public class GameScreen extends JPanel {
         this.add(pOnePanel);
         this.add(pTwoPanel);
 
+        setup();
+
     }
+    public void setup(){
+
+        for (int i = 0; i < test.length; i++) {
+            test[i] = new JButton();
+            test[i].setBackground(Color.white);
+            gamePanel.add(test[i]);
+        }
+
+    }
+
 }

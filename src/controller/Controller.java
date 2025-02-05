@@ -28,7 +28,8 @@ public class Controller {
                 break;
             case NEWGAMEBUTTON:
                 System.out.println("new game");
-                window.setEndScreen(); // inte korrekt, bara för test
+                window.populateGamePanel();
+
         }
     }
     public void addHighScore(String name, int score){
