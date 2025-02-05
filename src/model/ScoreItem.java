@@ -1,7 +1,6 @@
 package model;
-
 /**
- * kanske man bara gör en klass för varje spelare?
+ * Kanske man bara gör en klass för varje spelare?
  */
 
 public class ScoreItem {

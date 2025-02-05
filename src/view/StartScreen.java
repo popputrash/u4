@@ -1,3 +1,8 @@
+/**
+ * Panel som används som startskärm.
+ * @author Elias Brännström
+ */
+
 package view;
 import javax.swing.*;
 import java.awt.*;
@@ -13,6 +18,13 @@ public class StartScreen extends JPanel {
     JList<String> highScores = new JList<>();
     JLabel highScoreTile;
 
+    /**
+     * Constructor för startpanelen
+     * @author Elias Brännström
+     * @param width bredd på panel
+     * @param height höjd på panel
+     * @param window Fönstret panel sitter på
+     */
     public StartScreen(int width, int height, Window window){
 
         super(null);

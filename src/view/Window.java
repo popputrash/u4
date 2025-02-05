@@ -5,13 +5,12 @@ import java.awt.*;
 
 public class Window extends JFrame {
 
-    JPanel currentScreen;
-    JPanel gameScreen, startScreen, EndScreen;
-    Controller controller;
+    private JPanel gameScreen, startScreen, EndScreen,currentScreen;
+    private Controller controller;
 
-    Font titleFont = new Font("Castellar", Font.BOLD, 40);
-    Font btnFont = new Font("Algerian", Font.PLAIN, 14);
-    Font subTitleFont = new Font("Castellar", Font.BOLD, 30);
+    private Font titleFont = new Font("Castellar", Font.BOLD, 40),
+            btnFont = new Font("Algerian", Font.PLAIN, 14),
+            subTitleFont = new Font("Castellar", Font.BOLD, 30);
 
     public Window(String title, Controller controller){
         super(title);
@@ -67,9 +66,7 @@ public class Window extends JFrame {
         this.setSize(width,height);
     }
 
-    public void populateGamePanel(){
 
-    }
 
 
 }

@@ -1,10 +1,8 @@
 package view;
 
-import model.GameTile;
-import model.TreasureTile;
-
+import model.*;
+import view.Window;
 import javax.swing.*;
-import javax.swing.border.BevelBorder;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -18,7 +16,6 @@ public class GameScreen extends JPanel {
 
 
     public GameScreen(int width, int height, Window window){
-
 
         super(null);
         this.setSize(width, height);
@@ -39,6 +36,7 @@ public class GameScreen extends JPanel {
         gamePanel.setSize(700,700);
         gamePanel.setLocation(45,55);
         gamePanel.setBackground(Color.DARK_GRAY.darker());
+        //gamePanel.setBorder(new LineBorder(Color.yellow));
         this.add(gamePanel);
 
 
@@ -111,11 +109,27 @@ public class GameScreen extends JPanel {
             public void mouseExited(MouseEvent e) {}
         });
     }
+
+    /**
+     * Ska flyttas till GameManager
+     * @param ska vara en färdig array som bara adderas
+     */
     public void setup(){
         for (int i = 0; i < 100; i++) {
-            gameTiles[i] = new TreasureTile();
+            if(i%4==0){
+                gameTiles[i] = new TreasureTile();
+            } else if (i%15 == 0) {
+                gameTiles[i] = new TrapTile();
+            } else if (i%15 == 1) {
+                gameTiles[i] = new SurpriseTile();
+            }
+            else{
+                gameTiles[i] = new EmptyTile();
+            }
+
             gamePanel.add(gameTiles[i]);
         }
+
     }
 
 }
