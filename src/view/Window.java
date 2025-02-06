@@ -1,11 +1,18 @@
 package view;
 import controller.Controller;
 import javax.swing.*;
+import javax.xml.crypto.dsig.spec.XSLTTransformParameterSpec;
 import java.awt.*;
 
 public class Window extends JFrame {
 
-    private JPanel gameScreen, startScreen, EndScreen,currentScreen;
+    private GameScreen gameScreen;
+    private StartScreen startScreen;
+    private EndScreen EndScreen;
+    private JPanel currentScreen;
+
+
+
     private Controller controller;
 
     private Font titleFont = new Font("Castellar", Font.BOLD, 40),
@@ -64,6 +71,12 @@ public class Window extends JFrame {
     }
     public void setWindowSize(int width, int height){
         this.setSize(width,height);
+    }
+    public void setup(){
+        gameScreen.setup();
+    }
+    public void clearGamePanel(){
+        gameScreen.clearGamePanel();
     }
 
 

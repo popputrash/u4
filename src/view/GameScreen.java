@@ -1,7 +1,6 @@
 package view;
 
 import model.*;
-import view.Window;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -111,11 +110,12 @@ public class GameScreen extends JPanel {
     }
 
     /**
-     * Ska flyttas till GameManager
      * @param ska vara en färdig array som bara adderas
      */
     public void setup(){
+        gameTiles = new GameTile[100];
         for (int i = 0; i < 100; i++) {
+
             if(i%4==0){
                 gameTiles[i] = new TreasureTile();
             } else if (i%15 == 0) {
@@ -129,7 +129,13 @@ public class GameScreen extends JPanel {
 
             gamePanel.add(gameTiles[i]);
         }
+        gamePanel.repaint();
 
+    }
+    public void clearGamePanel(){
+        for(GameTile gametile : gameTiles){
+            gamePanel.remove(gametile);
+        }
     }
 
 }

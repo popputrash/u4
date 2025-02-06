@@ -17,7 +17,7 @@ public abstract class GameTile extends JPanel {
         this.text.setVisible(false);
         add(this.text);
         found = false;
-        setBackground(Color.red.darker());
+        setBackground(Color.GREEN.darker());
         setBorder(new LineBorder(Color.yellow));
     }
     public void reveal() {
@@ -25,6 +25,12 @@ public abstract class GameTile extends JPanel {
         text.setVisible(true);
         setBorder(new LineBorder(Color.gray));
         setBackground(color);
+    }
+    public void reset(){
+        found = false;
+        text.setVisible(false);
+        setBackground(Color.GREEN.darker());
+        setBorder(new LineBorder(Color.yellow));
     }
 
     public boolean isFound() {

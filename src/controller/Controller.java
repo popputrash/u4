@@ -5,7 +5,6 @@ import model.*;
 public class Controller {
     final private Window window;
     private ScoreItem[] highScores;
-    private GameManager gameManager;
 
     public Controller(){
         window = new Window("Skattjakt", this);
@@ -28,8 +27,8 @@ public class Controller {
                 break;
             case NEWGAMEBUTTON:
                 System.out.println("new game");
-
-
+                window.clearGamePanel();
+                window.setup();
         }
     }
     public void addHighScore(String name, int score){
