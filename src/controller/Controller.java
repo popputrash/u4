@@ -63,7 +63,13 @@ public class Controller {
     }
 
     public void handleMouseClick(MouseEvent e){
-        int index = (10*(e.getY() / 70) + (e.getX()/70));
+        int index;
+        if(currentPlayer.isRandomTurn()){
+            index = new Random().nextInt(100);
+            while (gameTiles[index].isFound())index=new Random().nextInt(100);
+        }else{
+            index = (10*(e.getY() / 70) + (e.getX()/70));
+        }
         System.out.print("x: " + e.getX()/70);
         System.out.print(", y: " + e.getY()/70);
         System.out.println(", Index: " + index);
@@ -83,12 +89,10 @@ public class Controller {
                     handleSupriseTile(currentPlayer);
                     break;
             }
+            if(remainingTurns <= 0){
+                currentPlayer = playerList.get(1 - playerList.indexOf(currentPlayer));
+            }
         }
-
-        if(remainingTurns <= 0){
-            currentPlayer = playerList.get(1 - playerList.indexOf(currentPlayer));
-        }
-
     }
 
     /**
@@ -114,7 +118,7 @@ public class Controller {
             } else if (i%15 == 0) {
                 gameTiles[i] = new GameTile(Color.RED.darker(), "TRAP", TileType.TRAP);
             } else if (i%15 == 1) {
-                gameTiles[i] = new GameTile(Color.BLUE.darker(), "TRAP", TileType.SUPRISE);
+                gameTiles[i] = new GameTile(Color.BLUE.darker(), "SUPRISE", TileType.SUPRISE);
             }
             else{
                 gameTiles[i] = new GameTile(Color.GRAY, "", TileType.EMPTY );
@@ -139,12 +143,16 @@ public class Controller {
                 remainingTurns = currentPlayer.getCrew();
                 break;
             case 2:
+                digRandomTreasureTile(currentPlayer);
                 break;
             case 3:
+                currentPlayer.setRandomTurn(true);
                 break;
-
-
         }
+    }
+
+    public void digRandomTreasureTile(Player currentPlayer) {
+
     }
 
 }
