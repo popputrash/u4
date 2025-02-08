@@ -6,6 +6,7 @@ import view.Window;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Controller {
     final private Window window;
@@ -13,6 +14,7 @@ public class Controller {
     private GameTile[] gameTiles = new GameTile[100];
     private ArrayList<Player> playerList;
     private Player currentPlayer;
+    private int remainingTurns;
 
     public Controller(){
         window = new Window("Skattjakt", this);
@@ -82,6 +84,11 @@ public class Controller {
                     break;
             }
         }
+
+        if(remainingTurns <= 0){
+            currentPlayer = playerList.get(1 - playerList.indexOf(currentPlayer));
+        }
+
     }
 
     /**
@@ -123,7 +130,18 @@ public class Controller {
     }
 
     public void handleSupriseTile(Player currentPlayer) {
+        Random rand = new Random();
+        switch(rand.nextInt(4)){
+            case 0:
+                currentPlayer.setCrew(currentPlayer.getCrew() + 1);
+                break;
+            case 1:
+                remainingTurns = currentPlayer.getCrew();
+                break;
+            case 2:
 
+
+        }
     }
 
 }
