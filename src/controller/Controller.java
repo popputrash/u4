@@ -128,6 +128,33 @@ public class Controller {
     }
 
     public void handleTrapTile(Player currentPlayer) {
+        Random rand = new Random();
+        switch (rand.nextInt(4)){
+            // blir av med upp till 100p
+            case 1:
+                if(currentPlayer.getScore() > 100){
+                    currentPlayer.decScore(100);
+                }
+                else{
+                    currentPlayer.setScore(0);
+                }
+                break;
+            //motståndaren får en andel av poängen
+            case 2:
+                if(currentPlayer.getScore() >= 100){
+                    currentPlayer.decScore(100);
+                    playerList.get(1 - playerList.indexOf(currentPlayer)).addScore(100);
+                }
+                else{
+                    playerList.get(1 - playerList.indexOf(currentPlayer)).addScore(currentPlayer.getScore());
+                    currentPlayer.setScore(0);
+                }
+                break;
+            //förlora en crew mate
+            case 3:
+                currentPlayer.decCrew();
+                break;
+        }
     }
 
     public void handleTreasureTile(Player currentPlayer) {

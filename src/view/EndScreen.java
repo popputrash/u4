@@ -62,4 +62,6 @@ public class EndScreen extends JPanel {
         btnNewGame.addActionListener(l -> window.btnPressed(ButtonType.NEWGAMEBUTTON));
         this.add(btnNewGame);
     }
+
+
 }
