@@ -6,6 +6,6 @@ import java.awt.*;
 public class EmptyTile extends GameTile{
 
     public EmptyTile() {
-        super(Color.gray, "");
+        super(Color.gray, "", TileType.EMPTY);
     }
 }

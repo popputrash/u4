@@ -4,7 +4,7 @@ import java.awt.*;
 public class TreasureTile extends GameTile {
 
     public TreasureTile(){
-        super(Color.yellow, "TREASURE");
+        super(Color.yellow, "TREASURE", TileType.TREASURE);
     }
 
 }

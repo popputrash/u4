@@ -40,5 +40,8 @@ public class GameTile extends JPanel {
         return found;
     }
 
+    public TileType getTileType() {
+        return tileType;
+    }
 
 }

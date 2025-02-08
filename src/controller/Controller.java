@@ -5,15 +5,21 @@ import view.Window;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 public class Controller {
     final private Window window;
     private ScoreItem[] highScores;
     private GameTile[] gameTiles = new GameTile[100];
+    private ArrayList<Player> playerList;
+    private Player currentPlayer;
 
     public Controller(){
         window = new Window("Skattjakt", this);
         highScores = new ScoreItem[10];
+        playerList = new ArrayList<Player>();
+        playerList.add(new Player());
+        playerList.add(new Player());
     }
     public void btnPressed(ButtonType button){
 
@@ -59,8 +65,23 @@ public class Controller {
         System.out.print("x: " + e.getX()/70);
         System.out.print(", y: " + e.getY()/70);
         System.out.println(", Index: " + index);
-        gameTiles[index].reveal();
 
+        if(!gameTiles[index].isFound()){
+            gameTiles[index].reveal();
+            switch(gameTiles[index].getTileType()){
+                case EMPTY:
+                    break;
+                case TREASURE:
+                    handleTreasureTile(currentPlayer);
+                    break;
+                case TRAP:
+                    handleTrapTile(currentPlayer);
+                    break;
+                case SUPRISE:
+                    handleSupriseTile(currentPlayer);
+                    break;
+            }
+        }
     }
 
     /**
@@ -81,19 +102,27 @@ public class Controller {
     public void setupNewGame(){
         gameTiles = new GameTile[100];
         for (int i = 0; i < 100; i++) {
-
             if(i%4==0){
-                gameTiles[i] = new GameTile(Color.yellow, "TREASURE",TileType.TREASURE);
+                gameTiles[i] = new GameTile(Color.yellow, "TREASURE", TileType.TREASURE);
             } else if (i%15 == 0) {
-                gameTiles[i] = new TrapTile();
+                gameTiles[i] = new GameTile(Color.RED.darker(), "TRAP", TileType.TRAP);
             } else if (i%15 == 1) {
-                gameTiles[i] = new SurpriseTile();
+                gameTiles[i] = new GameTile(Color.BLUE.darker(), "TRAP", TileType.SUPRISE);
             }
             else{
-                gameTiles[i] = new EmptyTile();
+                gameTiles[i] = new GameTile(Color.GRAY, "", TileType.EMPTY );
             }
-
         }
+       currentPlayer = playerList.get(0);
+    }
+
+    public void handleTrapTile(Player currentPlayer) {
+    }
+
+    public void handleTreasureTile(Player currentPlayer) {
+    }
+
+    public void handleSupriseTile(Player currentPlayer) {
 
     }
 
