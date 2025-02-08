@@ -1,7 +1,9 @@
 package controller;
 import view.*;
 import model.*;
+import view.Window;
 
+import java.awt.*;
 import java.awt.event.MouseEvent;
 
 public class Controller {
@@ -33,7 +35,7 @@ public class Controller {
                 System.out.println("new game");
                 window.clearGamePanel();
                 setupNewGame();
-                window.setup(gameTiles);
+                window.setGameScreen(gameTiles);
         }
     }
     public void addHighScore(String name, int score){
@@ -81,7 +83,7 @@ public class Controller {
         for (int i = 0; i < 100; i++) {
 
             if(i%4==0){
-                gameTiles[i] = new TreasureTile();
+                gameTiles[i] = new GameTile(Color.yellow, "TREASURE",TileType.TREASURE);
             } else if (i%15 == 0) {
                 gameTiles[i] = new TrapTile();
             } else if (i%15 == 1) {

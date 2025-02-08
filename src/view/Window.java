@@ -72,7 +72,8 @@ public class Window extends JFrame {
         this.setSize(width,height);
     }
     public void setup(GameTile[] gameTiles){
-        gameScreen.addTiles(gameTiles);
+
+        gameScreen = new GameScreen(500,500, this,  controller ,gameTiles);
     }
     public void clearGamePanel(){
         gameScreen.clearGamePanel();
