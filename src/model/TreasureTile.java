@@ -7,5 +7,4 @@ public class TreasureTile extends GameTile {
         super(Color.yellow, "TREASURE");
     }
 
-
 }

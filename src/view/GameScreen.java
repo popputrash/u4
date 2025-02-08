@@ -98,8 +98,12 @@ public class GameScreen extends JPanel {
                 int index = (10*(e.getY() / 70) + (e.getX()/70));
                 System.out.print("x: " + e.getX()/70);
                 System.out.print(", y: " + e.getY()/70);
-                System.out.println(", total position: " + index);
+                System.out.println(", Index: " + index);
                 gameTiles[index].reveal();
+
+                if(isGameFinished()){
+                    gameOver();
+                }
 
             }
             public void mousePressed(MouseEvent e) {}
@@ -136,6 +140,18 @@ public class GameScreen extends JPanel {
         for(GameTile gametile : gameTiles){
             gamePanel.remove(gametile);
         }
+    }
+    public boolean isGameFinished(){
+        for (GameTile gameTile : gameTiles){
+            if (!gameTile.isFound()){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public void gameOver(){
+        window.setEndScreen();
     }
 
 }

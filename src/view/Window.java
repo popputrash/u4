@@ -1,23 +1,19 @@
 package view;
 import controller.Controller;
 import javax.swing.*;
-import javax.xml.crypto.dsig.spec.XSLTTransformParameterSpec;
 import java.awt.*;
 
 public class Window extends JFrame {
 
-    private GameScreen gameScreen;
-    private StartScreen startScreen;
-    private EndScreen EndScreen;
+    private final GameScreen gameScreen;
+    private final StartScreen startScreen;
+    private final EndScreen EndScreen;
     private JPanel currentScreen;
+    private final Controller controller;
 
-
-
-    private Controller controller;
-
-    private Font titleFont = new Font("Castellar", Font.BOLD, 40),
-            btnFont = new Font("Algerian", Font.PLAIN, 14),
-            subTitleFont = new Font("Castellar", Font.BOLD, 30);
+    private final Font titleFont = new Font("Castellar", Font.BOLD, 40),
+                 btnFont = new Font("Algerian", Font.PLAIN, 14),
+                 subTitleFont = new Font("Castellar", Font.BOLD, 30);
 
     public Window(String title, Controller controller){
         super(title);
@@ -34,6 +30,7 @@ public class Window extends JFrame {
         currentScreen = startScreen;
         add(currentScreen);
     }
+
     public Font getTileFont(){return titleFont;}
     public Font getBtnFont(){return btnFont;}
     public Font getSubTitleFont(){return subTitleFont;}
@@ -77,6 +74,10 @@ public class Window extends JFrame {
     }
     public void clearGamePanel(){
         gameScreen.clearGamePanel();
+    }
+
+    public void setHighScores (String[] highScores){
+        startScreen.setHighScores(highScores);
     }
 
 

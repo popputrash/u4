@@ -8,7 +8,7 @@ public class Controller {
 
     public Controller(){
         window = new Window("Skattjakt", this);
-        highScores = new ScoreItem[5];
+        highScores = new ScoreItem[10];
     }
     public void btnPressed(ButtonType button){
 
@@ -32,20 +32,34 @@ public class Controller {
         }
     }
     public void addHighScore(String name, int score){
-        ScoreItem tempHighScoreItem;
-        ScoreItem tempsScore;
+        ScoreItem scoreA;
+        ScoreItem scoreB;
 
-        for(int i = 0; 0 < highScores.length; i++){
-            if(score > highScores[i].getScore()){
-                tempHighScoreItem = highScores[i];
+        for(int i = 0; i < highScores.length; i++){
+            if(highScores[i] != null && score > highScores[i].getScore()){
+                scoreA = highScores[i];
                 highScores[i] = new ScoreItem(score,name);
 
-                // lägg till lite mer loopar för att justera listan
-
+                highScores[i+i] = scoreA;
 
                 return;
             }
         }
     }
+
+    /**
+     * sätter highScore skärmen till highscore arrayen
+     */
+    public void setHighScores(){
+        String[] temp = new String[highScores.length];
+        for (int i = 0; i < highScores.length; i++) {
+            if(highScores[i] != null){
+                temp[i] = highScores[i].toString();
+            }
+        }
+        window.setHighScores(temp);
+    }
+
+    public void saveHighScores(){}
 
 }

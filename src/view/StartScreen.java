@@ -7,6 +7,7 @@ package view;
 import javax.swing.*;
 import java.awt.*;
 
+
 public class StartScreen extends JPanel {
 
     Window window;
@@ -71,7 +72,6 @@ public class StartScreen extends JPanel {
      */
     public void setUp(){
 
-
         // Titel
         mainTitle = new JLabel("SKATTJAKT!");
         mainTitle.setSize(300,70);
@@ -79,13 +79,11 @@ public class StartScreen extends JPanel {
         mainTitle.setForeground(Color.yellow.darker());
         mainTitle.setFont(window.getTileFont());
 
-
         // High score screen background
         highScorePanel = new JPanel(null);
         highScorePanel.setSize(200,250);
         highScorePanel.setLocation(150,130);
         highScorePanel.setBackground(Color.DARK_GRAY.darker());
-
 
         // High score screen label
         highScoreTile = new JLabel("HIGH SCORES");
@@ -94,12 +92,11 @@ public class StartScreen extends JPanel {
         highScoreTile.setSize(90,20);
         highScoreTile.setLocation(55,0);
 
-
         // High score list
         highScores.setFont(window.getBtnFont());
         highScores.setForeground(Color.yellow.darker());
         highScores.setBackground(Color.DARK_GRAY.darker());
-        highScores.setSize(50,220);
+        highScores.setSize(200,220);
         highScores.setLocation(20,20);
         highScores.setEnabled(false);
 
@@ -108,6 +105,11 @@ public class StartScreen extends JPanel {
         highScorePanel.add(highScores);
         this.add(highScorePanel);
         this.add(mainTitle);
+    }
+
+    public void setHighScores(String[] highScores){
+        this.highScores.setListData(highScores);
+        this.highScores.repaint();
     }
 
 }
