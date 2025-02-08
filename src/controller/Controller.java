@@ -131,6 +131,7 @@ public class Controller {
     }
 
     public void handleTreasureTile(Player currentPlayer) {
+
     }
 
     public void handleSupriseTile(Player currentPlayer) {
