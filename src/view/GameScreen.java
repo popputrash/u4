@@ -1,5 +1,6 @@
 package view;
 
+import controller.Controller;
 import model.*;
 import javax.swing.*;
 import java.awt.*;
@@ -12,15 +13,17 @@ public class GameScreen extends JPanel {
     JPanel gamePanel, pOnePanel,pTwoPanel;
     JButton btnMenu, btnNewGame;
     GameTile[] gameTiles = new GameTile[100];
+    private Controller controller;
 
 
-    public GameScreen(int width, int height, Window window){
+    public GameScreen(int width, int height, Window window, Controller controller, GameTile[] gameTiles) {
 
         super(null);
         this.setSize(width, height);
         this.window = window;
         this.setBackground(Color.black);
         this.setLocation(0,0);
+        this.controller = controller;
 
         // Titel
         mainTitle = new JLabel("SKATTJAKT!");
@@ -88,23 +91,16 @@ public class GameScreen extends JPanel {
         pTwo.setLocation(35,2);
         pTwoPanel.add(pTwo);
 
+
         this.add(pOnePanel);
         this.add(pTwoPanel);
 
-        setup();
+        addTiles(gameTiles);
+
         gamePanel.addMouseListener(new MouseListener() {
 
             public void mouseClicked(MouseEvent e) {
-                int index = (10*(e.getY() / 70) + (e.getX()/70));
-                System.out.print("x: " + e.getX()/70);
-                System.out.print(", y: " + e.getY()/70);
-                System.out.println(", Index: " + index);
-                gameTiles[index].reveal();
-
-                if(isGameFinished()){
-                    gameOver();
-                }
-
+                controller.handleMouseClick(e);
             }
             public void mousePressed(MouseEvent e) {}
             public void mouseReleased(MouseEvent e) {}
@@ -116,30 +112,19 @@ public class GameScreen extends JPanel {
     /**
      * @param ska vara en färdig array som bara adderas
      */
-    public void setup(){
-        gameTiles = new GameTile[100];
-        for (int i = 0; i < 100; i++) {
 
-            if(i%4==0){
-                gameTiles[i] = new TreasureTile();
-            } else if (i%15 == 0) {
-                gameTiles[i] = new TrapTile();
-            } else if (i%15 == 1) {
-                gameTiles[i] = new SurpriseTile();
-            }
-            else{
-                gameTiles[i] = new EmptyTile();
-            }
-
-            gamePanel.add(gameTiles[i]);
+    public void addTiles(GameTile[] gameTiles){
+        for(GameTile gameTile : gameTiles){
+            gamePanel.add(gameTile);
         }
         gamePanel.repaint();
-
     }
+
     public void clearGamePanel(){
         for(GameTile gametile : gameTiles){
             gamePanel.remove(gametile);
         }
+
     }
     public boolean isGameFinished(){
         for (GameTile gameTile : gameTiles){

@@ -1,11 +1,13 @@
 package view;
 import controller.Controller;
+import model.GameTile;
+
 import javax.swing.*;
 import java.awt.*;
 
 public class Window extends JFrame {
 
-    private final GameScreen gameScreen;
+    private GameScreen gameScreen;
     private final StartScreen startScreen;
     private final EndScreen EndScreen;
     private JPanel currentScreen;
@@ -24,7 +26,6 @@ public class Window extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         startScreen = new StartScreen(500,500, this);
-        gameScreen = new GameScreen(500,500, this);
         EndScreen = new EndScreen(500,500, this);
 
         currentScreen = startScreen;
@@ -39,10 +40,11 @@ public class Window extends JFrame {
         controller.btnPressed(button);
     }
 
-    public void setGameScreen(){
+    public void setGameScreen(GameTile[] gameTiles){
 
         this.remove(currentScreen);
         this.setWindowSize(1000,830);
+        gameScreen = new GameScreen(500,500, this,  controller ,gameTiles);
         setCurrentScreen(gameScreen);
         this.add(currentScreen);
         this.repaint();
@@ -69,8 +71,8 @@ public class Window extends JFrame {
     public void setWindowSize(int width, int height){
         this.setSize(width,height);
     }
-    public void setup(){
-        gameScreen.setup();
+    public void setup(GameTile[] gameTiles){
+        gameScreen.addTiles(gameTiles);
     }
     public void clearGamePanel(){
         gameScreen.clearGamePanel();
