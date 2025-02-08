@@ -139,6 +139,9 @@ public class Controller {
                 remainingTurns = currentPlayer.getCrew();
                 break;
             case 2:
+                break;
+            case 3:
+                break;
 
 
         }
