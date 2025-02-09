@@ -151,12 +151,6 @@ public class GameScreen extends JPanel {
         gamePanel.repaint();
     }
 
-    public void clearGamePanel(){
-        for(GameTile gametile : gameTiles){
-            gamePanel.remove(gametile.getPanel());
-        }
-
-    }
     public boolean isGameFinished(){
         for (GameTile gameTile : gameTiles){
             if (!gameTile.isFound()){

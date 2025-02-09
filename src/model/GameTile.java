@@ -33,6 +33,12 @@ public abstract class GameTile {
         panel.setBackground(color);
     }
 
+    public void preview(){
+        text.setVisible(true);
+        panel.setBorder(new LineBorder(Color.gray));
+        panel.setBackground(color);
+    }
+
     public void reset(){
         found = false;
         text.setVisible(false);

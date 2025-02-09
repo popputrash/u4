@@ -16,6 +16,13 @@ public class TreasureTile extends GameTile {
         group.decrementTilesRemaining();
         if(group.isFullyFound()){
             player.addScore(100);
+            controller.notifyTreasure(this);
+
         }
     }
+
+    public String getFullyFoundMessage(){
+        return "You found a the last piece of treasure and was awarded 100 points!";
+    }
+
 }

@@ -16,7 +16,12 @@ public class Player {
     public int getScore() {
         return score;
     }
-    public void decScore(int i){score -= i;}
+    public void decScore(int i){
+        score -= i;
+        if(score < 0){
+            score = 0;
+        }
+    }
     public void setScore(int score){
         this.score = score;
     }
