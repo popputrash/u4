@@ -1,13 +1,16 @@
 package controller;
 import view.*;
 import model.*;
-import view.Window;
 
 import java.awt.event.MouseEvent;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Random;
 
+
+/**
+ * Klass för controller, hanterar all spellogik och medlar information mellan view och model packages.
+ */
 public class Controller {
     final private Window window;
     private ArrayList<ScoreItem> highScores;
@@ -15,10 +18,12 @@ public class Controller {
     private ArrayList<Player> playerList;
     private Player currentPlayer;
     private ArrayList<TreasureGroup> treasureGroups;
-    private int remainingTurns;
-    private String[] map;
     private final String scoreFile = "src/controller/scores.txt";
 
+    /**
+     * Konstruktor för controllern, sätter upp allt som behövs för spelet.
+     * @author Maximilian Andersen & Elias Brännström
+     */
     public Controller(){
         highScores = new ArrayList<>();
         readHighScores();
@@ -30,6 +35,12 @@ public class Controller {
         treasureGroups = new ArrayList<TreasureGroup>();
     }
 
+
+    /**
+     * Metod för att hantera knapptryckningar i view klasserna.
+     * @param button
+     * @author Maximilian Andersen & Elias Brännström
+     */
     public void btnPressed(ButtonType button){
 
         switch(button){
@@ -59,12 +70,23 @@ public class Controller {
                 setHighScores();
         }
     }
+
+    /**
+     * Metod för att addera ett nytt highscore till highscore listan.
+     * @param name
+     * @param score
+     */
     public void addHighScore(String name, int score){
         ScoreItem s = new ScoreItem(score, name);
         highScores.add(s);
         saveHighScores();
     }
 
+    /**
+     * Metod för att hantera musklick i gamescreen, egenligen en gameloop
+     * @param e, information från musen.
+     * @author Maximilian Andersen & Elias Brännström
+     */
     public void handleMouseClick(MouseEvent e){
         if(currentPlayer.isRandomTurn()){
             digRandomTile(currentPlayer);
@@ -72,8 +94,8 @@ public class Controller {
         }else{
             int index = (10*(e.getY() / 70) + (e.getX()/70));
             if(!gameTiles[index].isFound()){
-                gameTiles[index].dig(this, currentPlayer);
                 gameTiles[index].reveal();
+                gameTiles[index].dig(this, currentPlayer);
                 currentPlayer.setTurns(currentPlayer.getTurns() - 1);
             }
 
@@ -92,7 +114,8 @@ public class Controller {
     }
 
     /**
-     * sätter highScore skärmen till highscore arrayen
+     * Metod för att förmedla highscore lista till view klassen och visa denna.
+     * @author Maximilian Andersen & Elias Brännström
      */
     public void setHighScores(){
         readHighScores();
@@ -105,6 +128,10 @@ public class Controller {
         window.setHighScores(temp);
     }
 
+    /**
+     * Metod för att läsa av sparade highscores.
+     * @author Maximilian Andersen & Elias Brännström
+     */
     public void readHighScores(){
         highScores.clear();
         try(BufferedReader br = new BufferedReader(new FileReader(scoreFile))){
@@ -120,6 +147,10 @@ public class Controller {
         sortHighscores();
     }
 
+    /**
+     * Metod för att spara ner highscores till textfil-
+     * @author Maximilian Andersen & Elias Brännström
+     */
     public void saveHighScores() {
         sortHighscores();
 
@@ -136,6 +167,10 @@ public class Controller {
         }
     }
 
+    /**
+     * Metod för att starta ett nytt spel.
+     * @author Maximilian Andersen & Elias Brännström
+     */
     public void setupNewGame(){
         gameTiles = generateMap();
 
@@ -143,17 +178,28 @@ public class Controller {
         playerList.add(new Player());
         playerList.add(new Player());
 
-        //for(GameTile tile : gameTiles){
-        //    tile.preview();
-        //}
+        for(GameTile tile : gameTiles){
+            tile.preview();
+        }
         currentPlayer = playerList.get(0);
 
     }
 
+    /**
+     * Metod för att hantera ifall en får extra drag.
+     * @param currentPlayer
+     * @param extraTurns
+     * @author Maximilian Andersen & Elias Brännström
+     */
     public void handleExtraTurns(Player currentPlayer, int extraTurns) {
         currentPlayer.setTurns(currentPlayer.getTurns() + extraTurns);
     }
 
+    /**
+     * Metod för att grava upp en random treasure till currentPlayer.
+     * @param currentPlayer
+     * @author Maximilian Andersen & Elias Brännström
+     */
     public void digRandomTreasureTile(Player currentPlayer){
         Random rand = new Random();
         int index = rand.nextInt(treasureGroups.size());
@@ -165,8 +211,17 @@ public class Controller {
         TreasureTile temp = tg.getRandomTile();
         temp.dig(this, currentPlayer);
         temp.reveal();
+        if(checkEndGame()){
+            window.setEndScreen(getWinner().getScore());
+        }
+
     }
 
+    /**
+     * Metod för att gräva upp en random tile åt currentPlater
+     * @param currentPlayer
+     * @author Maximilian Andersen & Elias Brännström
+     */
     public void digRandomTile(Player currentPlayer) {
         Random rand = new Random();
         int index = rand.nextInt(gameTiles.length);
@@ -175,15 +230,29 @@ public class Controller {
         currentPlayer.setRandomTurn(false);
     }
 
+    /**
+     * Metod för att få motståndaren
+     * @param currentPlayer
+     * @return Player objektet som är motståndaren
+     * @author Maximilian Andersen & Elias Brännström
+     */
     public Player getOpponent(Player currentPlayer) {
         return playerList.get(1 - playerList.indexOf(currentPlayer));
     }
 
+    /**
+     * Metod för att byta currentplayer till nästa spelare
+     * @author Maximilian Andersen & Elias Brännström
+     */
     public void switchPlayer(){
         currentPlayer = playerList.get(1 - playerList.indexOf(currentPlayer));
         currentPlayer.setTurns(1);
     }
 
+    /**
+     * Metod för att förmedla information till view klasser under spelets gång
+     * @author Maximilian Andersen & Elias Brännström
+     */
     public void updateView(){
         window.updateCurrentPlayer(playerList.indexOf(currentPlayer));
         window.updatePlayerInfo(playerList.get(0).getScore(), playerList.get(1).getScore(),
@@ -191,6 +260,11 @@ public class Controller {
 
     }
 
+    /**
+     * Metod för att generera en slumpmässig karta
+     * @return en slumpmässig GameTile array
+     * @author Maximilian Andersen & Elias Brännström
+     */
     public GameTile[] generateMap(){
         //Generera random karta
         GameTile[][] temp = new GameTile[10][10];
@@ -290,6 +364,11 @@ public class Controller {
         return returnArray;
     }
 
+    /**
+     * Metod för att kontrollera ifall spelet är slut
+     * @return boolean ifall spelet är slut
+     * @author Maximilian Andersen & Elias Brännström
+     */
     public boolean checkEndGame(){
         boolean endGame = true;
         for(TreasureGroup treasureGroup : treasureGroups){
@@ -299,6 +378,11 @@ public class Controller {
         return currentPlayer.getCrew() < 1 || endGame;
     }
 
+    /**
+     * Metod för att få vinnaren
+     * @return Spelar objektet som vann
+     * @author Maximilian Andersen & Elias Brännström
+     */
     public Player getWinner(){
         if(playerList.get(0).getScore() > playerList.get(1).getScore()){
             return playerList.get(0);
@@ -306,18 +390,37 @@ public class Controller {
         return playerList.get(1);
     }
 
+    /**
+     * Metod för att notifera spelare om en Suprise
+     * @param surpriseTile
+     * @author Maximilian Andersen & Elias Brännström
+     */
     public void notifySuprise(SurpriseTile surpriseTile){
         window.displayMessage(surpriseTile.getSupriseMessage());
     }
 
+    /**
+     * Metod för att notifiera spelare om en Trap
+     * @param trapTile
+     * @author Maximilian Andersen & Elias Brännström
+     */
     public void notifyTrap(TrapTile trapTile){
         window.displayMessage(trapTile.getTrapMessage());
     }
 
+    /**
+     * Metod för att notifiera spelare om en Treasure
+     * @param treasureTile
+     * @author Maximilian Andersen & Elias Brännström
+     */
     public void notifyTreasure(TreasureTile treasureTile){
         window.displayMessage(treasureTile.getFullyFoundMessage());
     }
 
+    /**
+     * Metod för att sortera Highscore listan.
+     * @author Maximilian Andersen & Elias Brännström
+     */
     public void sortHighscores(){
         for(int i = 0; i < highScores.size(); i++){
             int min = i;

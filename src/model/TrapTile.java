@@ -2,13 +2,19 @@ package model;
 import controller.Controller;
 
 import java.awt.*;
-import java.util.Random;
 
+/**
+ * Class för Traps, hanterar 3 olika typer av traps
+ * @author Maximilian Andersen & Elias Bränsström
+ */
 public class TrapTile extends GameTile{
-
     private int type;
 
-
+    /**
+     * Konstruktor
+     * @param type
+     * @author Maximilian Andersen & Elias Bränsström
+     */
     public TrapTile(int type){
         super(Color.RED.darker(), "TRAP");
         if( type > 3 ){
@@ -19,7 +25,12 @@ public class TrapTile extends GameTile{
             this.type = type;
     }
 
-
+    /**
+     * Traps impolementation av dig, hanterar 3 olika typer av traps
+     * @param controller
+     * @param currentPlayer
+     * @author Maximilian Andersen & Elias Bränsström
+     */
     @Override
     public void dig(Controller controller, Player currentPlayer) {
         switch (type){
@@ -42,6 +53,11 @@ public class TrapTile extends GameTile{
         controller.notifyTrap(this);
     }
 
+    /**
+     * Metod för att returnera meddelande för given typ av trap.
+     * @return
+     * @author Maximilian Andersen & Elias Bränsström
+     */
     public String getTrapMessage(){
         switch(type){
             case 1:

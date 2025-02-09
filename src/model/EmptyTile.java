@@ -5,6 +5,9 @@ import controller.Controller;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 
+/**
+ * Subklass för en tom tile.
+ */
 public class EmptyTile extends GameTile{
 
     public EmptyTile() {

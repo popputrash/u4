@@ -8,11 +8,11 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 public class GameScreen extends JPanel {
-    Window window;
-    JLabel mainTitle, pOne, pTwo, pOneScore, pOneCrew, pTwoCrew, pTwoScore;
-    JPanel gamePanel, pOnePanel,pTwoPanel;
-    JButton btnMenu, btnNewGame;
-    GameTile[] gameTiles = new GameTile[100];
+    private Window window;
+    private JLabel mainTitle, pOne, pTwo, pOneScore, pOneCrew, pTwoCrew, pTwoScore;
+    private JPanel gamePanel, pOnePanel,pTwoPanel;
+    private JButton btnMenu, btnNewGame;
+    private GameTile[] gameTiles = new GameTile[100];
     private Controller controller;
 
 
@@ -149,15 +149,6 @@ public class GameScreen extends JPanel {
             gamePanel.add(gameTile.getPanel());
         }
         gamePanel.repaint();
-    }
-
-    public boolean isGameFinished(){
-        for (GameTile gameTile : gameTiles){
-            if (!gameTile.isFound()){
-                return false;
-            }
-        }
-        return true;
     }
 
     public void setCurrentPlayer(int index){

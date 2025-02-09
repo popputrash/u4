@@ -1,3 +1,5 @@
+bror 1020
+max 770
+othman 300
 lilo 300
 elias 300
-othman 300

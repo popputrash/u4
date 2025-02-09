@@ -6,12 +6,20 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 
+/**
+ * Klass för att hantera grupper av Treasures.
+ */
 public class TreasureGroup {
     private ArrayList<TreasureTile> treasures;
     private int tilesRemaining;
     private int shape[][];
     private int size;
 
+    /**
+     * Konstruktor, tar in id för vilken form grouppen ska ha
+     * @param id
+     * @author Maximilian Andersen & Elias Brännström
+     */
     public TreasureGroup(int id) {
         this.treasures = new ArrayList<>();
         shape = generateShapeFromId(id);
@@ -20,11 +28,21 @@ public class TreasureGroup {
 
     }
 
+    /**
+     * Metod för att addera ett Treasure objekt.
+     * @param treasure
+     * @author Maximilian Andersen & Elias Brännström
+     */
     public void addTreasure(TreasureTile treasure) {
         this.treasures.add(treasure);
         tilesRemaining = this.treasures.size();
     }
 
+    /**
+     * Metod för att kontrollera ifall hela gruppen är uppgrävd
+     * @return
+     * @author Maximilian Andersen & Elias Brännström
+     */
     public boolean isFullyFound(){
         if(tilesRemaining == 0){
             return true;
@@ -33,6 +51,11 @@ public class TreasureGroup {
         }
     }
 
+    /**
+     * Returnerar en slumpmässigt vald icke uppgrävd splumässigt treasure
+     * @return
+     * @author Maximilian Andersen & Elias Brännström
+     */
     public TreasureTile getRandomTile() {
         Random rand = new Random();
         int index = rand.nextInt(tilesRemaining);
@@ -43,10 +66,20 @@ public class TreasureGroup {
 
     }
 
+    /**
+     * Minskar antal treasures som är kvar
+     * @author Maximilian Andersen & Elias Brännström
+     */
     public void decrementTilesRemaining(){
         tilesRemaining--;
     }
 
+    /**
+     * Genererar en shape från ett id
+     * @param id
+     * @return 2d array av shapen.
+     * @author Maximilian Andersen & Elias Brännström
+     */
     public int[][] generateShapeFromId(int id){
         int temp[][];
         switch(id){
@@ -105,6 +138,11 @@ public class TreasureGroup {
         return temp;
     }
 
+    /**
+     * Returnerar antalet treasures från början.
+     * @return
+     * @author Maximilian Andersen & Elias Brännström
+     */
     public int initialAmountOfTreasures(){
         int count = 0;
         for(int[] row : shape){
@@ -115,10 +153,20 @@ public class TreasureGroup {
         return count;
     }
 
+    /**
+     * Getter för shape
+     * @return
+     * @author Maximilian Andersen & Elias Brännström
+     */
     public int[][] getShape() {
         return shape;
     }
 
+    /**
+     * Getter för size
+     * @return
+     * @author Maximilian Andersen & Elias Brännström
+     */
     public int getSize() {
         return size;
     }
