@@ -9,7 +9,7 @@ import java.awt.event.MouseListener;
 
 public class GameScreen extends JPanel {
     Window window;
-    JLabel mainTitle, pOne, pTwo;
+    JLabel mainTitle, pOne, pTwo, pOneScore, pOneCrew, pTwoCrew, pTwoScore;
     JPanel gamePanel, pOnePanel,pTwoPanel;
     JButton btnMenu, btnNewGame;
     GameTile[] gameTiles = new GameTile[100];
@@ -82,14 +82,45 @@ public class GameScreen extends JPanel {
         pOne.setFont(window.getBtnFont());
         pOne.setForeground(Color.yellow.darker());
         pOne.setLocation(35,2);
+
+        pOneScore = new JLabel("Score: 0");
+        pOneScore.setSize(100,10);
+        pOneScore.setFont(window.getBtnFont());
+        pOneScore.setForeground(Color.yellow.darker());
+        pOneScore.setLocation(35,18);
+
+        pOneCrew = new JLabel("Crew: 3");
+        pOneCrew.setSize(100,10);
+        pOneCrew.setFont(window.getBtnFont());
+        pOneCrew.setForeground(Color.yellow.darker());
+        pOneCrew.setLocation(35,34);
+
         pOnePanel.add(pOne);
+        pOnePanel.add(pOneScore);
+        pOnePanel.add(pOneCrew);
+
 
         pTwo = new JLabel("Player 2:");
         pTwo.setSize(100,10);
         pTwo.setFont(window.getBtnFont());
         pTwo.setForeground(Color.yellow.darker());
         pTwo.setLocation(35,2);
+
+        pTwoScore = new JLabel("Score: 0");
+        pTwoScore.setSize(100,10);
+        pTwoScore.setFont(window.getBtnFont());
+        pTwoScore.setForeground(Color.yellow.darker());
+        pTwoScore.setLocation(35,18);
+
+        pTwoCrew = new JLabel("Crew: 3");
+        pTwoCrew.setSize(100,10);
+        pTwoCrew.setFont(window.getBtnFont());
+        pTwoCrew.setForeground(Color.yellow.darker());
+        pTwoCrew.setLocation(35,34);
+
         pTwoPanel.add(pTwo);
+        pTwoPanel.add(pTwoScore);
+        pTwoPanel.add(pTwoCrew);
 
 
         this.add(pOnePanel);
@@ -115,14 +146,14 @@ public class GameScreen extends JPanel {
 
     public void addTiles(GameTile[] gameTiles){
         for(GameTile gameTile : gameTiles){
-            gamePanel.add(gameTile);
+            gamePanel.add(gameTile.getPanel());
         }
         gamePanel.repaint();
     }
 
     public void clearGamePanel(){
         for(GameTile gametile : gameTiles){
-            gamePanel.remove(gametile);
+            gamePanel.remove(gametile.getPanel());
         }
 
     }
@@ -138,5 +169,25 @@ public class GameScreen extends JPanel {
     public void gameOver(){
         window.setEndScreen();
     }
+
+    public void setCurrentPlayer(int index){
+        if(index == 0){
+            pOnePanel.setBackground(Color.cyan.darker());
+            pTwoPanel.setBackground(Color.DARK_GRAY.darker());
+        }else{
+            pOnePanel.setBackground(Color.DARK_GRAY.darker());
+            pTwoPanel.setBackground(Color.cyan.darker());
+
+        }
+    }
+
+    public void updatePlayerInfo(int score1, int score2, int crew1, int crew2){
+        pOneScore.setText("Score: " + score1);
+        pTwoScore.setText("Score: " + score2);
+        pOneCrew.setText("Crew: " + crew1);
+        pTwoCrew.setText("Crew: " + crew2);
+        repaint();
+    }
+
 
 }

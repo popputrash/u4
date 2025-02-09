@@ -20,7 +20,7 @@ public class Window extends JFrame {
     public Window(String title, Controller controller){
         super(title);
         this.controller = controller;
-        setVisible(true);
+
         setSize(500,500);
         setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -30,6 +30,7 @@ public class Window extends JFrame {
 
         currentScreen = startScreen;
         add(currentScreen);
+        setVisible(true);
     }
 
     public Font getTileFont(){return titleFont;}
@@ -83,7 +84,12 @@ public class Window extends JFrame {
         startScreen.setHighScores(highScores);
     }
 
+    public void updatePlayerInfo(int score1, int score2, int crew1, int crew2){
+        gameScreen.updatePlayerInfo(score1, score2, crew1, crew2);
+    }
 
-
+    public void updateCurrentPlayer(int index){
+        gameScreen.setCurrentPlayer(index);
+    }
 
 }

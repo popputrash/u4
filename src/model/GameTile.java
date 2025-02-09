@@ -1,4 +1,6 @@
 package model;
+import controller.Controller;
+
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
@@ -7,41 +9,45 @@ import java.awt.*;
  * Tänker att varje möjlig spelruta ärver denna klass.
  *
  */
-public class GameTile extends JPanel {
+public abstract class GameTile {
     Color color;
     JLabel text;
+    JPanel panel;
     boolean found;
-    TileType tileType;
 
-    public GameTile(Color color, String text, TileType tileType) {
+    public GameTile(Color color, String text) {
+        this.panel = new JPanel();
         this.color = color;
         this.text = new JLabel(text);
         this.text.setVisible(false);
-        this.tileType = tileType;
-        add(this.text);
+        panel.add(this.text);
         found = false;
-        setBackground(Color.GREEN.darker());
-        setBorder(new LineBorder(Color.yellow));
+        panel.setBackground(Color.GREEN.darker());
+        panel.setBorder(new LineBorder(Color.yellow));
     }
+
     public void reveal() {
         found = true;
         text.setVisible(true);
-        setBorder(new LineBorder(Color.gray));
-        setBackground(color);
+        panel.setBorder(new LineBorder(Color.gray));
+        panel.setBackground(color);
     }
+
     public void reset(){
         found = false;
         text.setVisible(false);
-        setBackground(Color.GREEN.darker());
-        setBorder(new LineBorder(Color.yellow));
+        panel.setBackground(Color.GREEN.darker());
+        panel.setBorder(new LineBorder(Color.yellow));
+    }
+
+    public JPanel getPanel() {
+        return panel;
     }
 
     public boolean isFound() {
         return found;
     }
 
-    public TileType getTileType() {
-        return tileType;
-    }
+    public abstract void dig(Controller controller, Player player);
 
 }

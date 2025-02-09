@@ -4,11 +4,13 @@ public class Player {
     private int score;
     private int crew;
     private boolean randomTurn;
+    private int turns;
 
     public Player() {
         this.score = 0;
         this.crew = 3;
         this.randomTurn = false;
+        this.turns = 0;
     }
 
     public int getScore() {
@@ -26,8 +28,8 @@ public class Player {
         return crew;
     }
     public void decCrew(){crew--;}
-    public void setCrew(int crew) {
-        this.crew = crew;
+    public void addCrew() {
+        this.crew++;
     }
 
     public void setRandomTurn(boolean randomTurn) {
@@ -36,5 +38,13 @@ public class Player {
 
     public boolean isRandomTurn() {
         return randomTurn;
+    }
+
+    public int getTurns() {
+        return turns;
+    }
+
+    public void setTurns(int turns) {
+        this.turns = turns;
     }
 }

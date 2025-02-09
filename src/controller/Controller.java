@@ -14,7 +14,9 @@ public class Controller {
     private GameTile[] gameTiles = new GameTile[100];
     private ArrayList<Player> playerList;
     private Player currentPlayer;
+    private TreasureGroup treasureGroup;
     private int remainingTurns;
+    private String[] map;
 
     public Controller(){
         window = new Window("Skattjakt", this);
@@ -22,7 +24,9 @@ public class Controller {
         playerList = new ArrayList<Player>();
         playerList.add(new Player());
         playerList.add(new Player());
+        treasureGroup = new TreasureGroup(1);
     }
+
     public void btnPressed(ButtonType button){
 
         switch(button){
@@ -30,6 +34,7 @@ public class Controller {
                 System.out.println("start");
                 setupNewGame();
                 window.setGameScreen(gameTiles);
+                updateView();
                 break;
             case EXITBUTTON:
                 System.out.println("exit");
@@ -44,6 +49,7 @@ public class Controller {
                 window.clearGamePanel();
                 setupNewGame();
                 window.setGameScreen(gameTiles);
+                updateView();
         }
     }
     public void addHighScore(String name, int score){
@@ -63,36 +69,21 @@ public class Controller {
     }
 
     public void handleMouseClick(MouseEvent e){
-        int index;
-        if(currentPlayer.isRandomTurn()){
-            index = new Random().nextInt(100);
-            while (gameTiles[index].isFound())index=new Random().nextInt(100);
-        }else{
-            index = (10*(e.getY() / 70) + (e.getX()/70));
-        }
+        int index = (10*(e.getY() / 70) + (e.getX()/70));
         System.out.print("x: " + e.getX()/70);
         System.out.print(", y: " + e.getY()/70);
         System.out.println(", Index: " + index);
-
         if(!gameTiles[index].isFound()){
+            gameTiles[index].dig(this, currentPlayer);
             gameTiles[index].reveal();
-            switch(gameTiles[index].getTileType()){
-                case EMPTY:
-                    break;
-                case TREASURE:
-                    handleTreasureTile(currentPlayer);
-                    break;
-                case TRAP:
-                    handleTrapTile(currentPlayer);
-                    break;
-                case SUPRISE:
-                    handleSupriseTile(currentPlayer);
-                    break;
-            }
-            if(remainingTurns <= 0){
-                currentPlayer = playerList.get(1 - playerList.indexOf(currentPlayer));
-            }
+            currentPlayer.setTurns(currentPlayer.getTurns() - 1);
         }
+        if(currentPlayer.getTurns() <= 0){
+            switchPlayer();
+        }
+
+        updateView();
+
     }
 
     /**
@@ -114,73 +105,56 @@ public class Controller {
         gameTiles = new GameTile[100];
         for (int i = 0; i < 100; i++) {
             if(i%4==0){
-                gameTiles[i] = new GameTile(Color.yellow, "TREASURE", TileType.TREASURE);
+                TreasureTile tile = new TreasureTile(treasureGroup);
+                treasureGroup.addTreasure(tile);
+                gameTiles[i] = tile;
             } else if (i%15 == 0) {
-                gameTiles[i] = new GameTile(Color.RED.darker(), "TRAP", TileType.TRAP);
+                gameTiles[i] = new TrapTile();
             } else if (i%15 == 1) {
-                gameTiles[i] = new GameTile(Color.BLUE.darker(), "SUPRISE", TileType.SUPRISE);
+                gameTiles[i] = new SurpriseTile();
             }
             else{
-                gameTiles[i] = new GameTile(Color.GRAY, "", TileType.EMPTY );
+                gameTiles[i] = new EmptyTile();
             }
         }
-       currentPlayer = playerList.get(0);
-    }
-
-    public void handleTrapTile(Player currentPlayer) {
-        Random rand = new Random();
-        switch (rand.nextInt(4)){
-            // blir av med upp till 100p
-            case 1:
-                if(currentPlayer.getScore() > 100){
-                    currentPlayer.decScore(100);
-                }
-                else{
-                    currentPlayer.setScore(0);
-                }
-                break;
-            //motståndaren får en andel av poängen
-            case 2:
-                if(currentPlayer.getScore() >= 100){
-                    currentPlayer.decScore(100);
-                    playerList.get(1 - playerList.indexOf(currentPlayer)).addScore(100);
-                }
-                else{
-                    playerList.get(1 - playerList.indexOf(currentPlayer)).addScore(currentPlayer.getScore());
-                    currentPlayer.setScore(0);
-                }
-                break;
-            //förlora en crew mate
-            case 3:
-                currentPlayer.decCrew();
-                break;
-        }
-    }
-
-    public void handleTreasureTile(Player currentPlayer) {
+        currentPlayer = playerList.get(0);
 
     }
 
-    public void handleSupriseTile(Player currentPlayer) {
-        Random rand = new Random();
-        switch(rand.nextInt(4)){
-            case 0:
-                currentPlayer.setCrew(currentPlayer.getCrew() + 1);
-                break;
-            case 1:
-                remainingTurns = currentPlayer.getCrew();
-                break;
-            case 2:
-                digRandomTreasureTile(currentPlayer);
-                break;
-            case 3:
-                currentPlayer.setRandomTurn(true);
-                break;
-        }
+    public void handleExtraTurns(Player currentPlayer, int extraTurns) {
+        currentPlayer.setTurns(currentPlayer.getTurns() + extraTurns);
     }
 
-    public void digRandomTreasureTile(Player currentPlayer) {
+    public void digRandomTreasureTile(Player currentPlayer){
+        //gräv upp random treasuretile
+    }
 
+    public void digRandomTile(Player currentPlayer) {
+        //gräv upp random tile nästa drag.
+    }
+
+    public Player getOpponent(Player currentPlayer) {
+        return playerList.get(1 - playerList.indexOf(currentPlayer));
+    }
+
+    public void switchPlayer(){
+        currentPlayer = playerList.get(1 - playerList.indexOf(currentPlayer));
+        currentPlayer.setTurns(1);
+    }
+
+    public void updateView(){
+        window.updateCurrentPlayer(playerList.indexOf(currentPlayer));
+        window.updatePlayerInfo(playerList.get(0).getScore(), playerList.get(1).getScore(),
+                playerList.get(0).getCrew(), playerList.get(1).getCrew());
+
+    }
+
+    public GameTile[] generateMap(){
+        //Generera random karta
+        GameTile[] temp = new GameTile[100];
+
+
+        return temp;
     }
 
 }
