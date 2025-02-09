@@ -5,22 +5,27 @@ import view.Window;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Random;
 
 public class Controller {
     final private Window window;
-    private ScoreItem[] highScores;
+    private ArrayList<ScoreItem> highScores;
     private GameTile[] gameTiles = new GameTile[100];
     private ArrayList<Player> playerList;
     private Player currentPlayer;
     private ArrayList<TreasureGroup> treasureGroups;
     private int remainingTurns;
     private String[] map;
+    private final String scoreFile = "src/controller/scores.txt";
 
     public Controller(){
+        highScores = new ArrayList<>();
+        readHighScores();
         window = new Window("Skattjakt", this);
-        highScores = new ScoreItem[10];
+        setHighScores();
+        highScores = new ArrayList<ScoreItem>();
         playerList = new ArrayList<Player>();
         playerList.add(new Player());
         playerList.add(new Player());
@@ -50,27 +55,22 @@ public class Controller {
                 window.setGameScreen(gameTiles);
                 updateView();
                 break;
+            case SAVE:
+                addHighScore(window.getUsername(), getWinner().getScore());
+                saveHighScores();
+                setHighScores();
+                window.setMenuScreen();
         }
     }
     public void addHighScore(String name, int score){
-        ScoreItem scoreA;
-        ScoreItem scoreB;
-
-        for(int i = 0; i < highScores.length; i++){
-            if(highScores[i] != null && score > highScores[i].getScore()){
-                scoreA = highScores[i];
-                highScores[i] = new ScoreItem(score,name);
-
-                highScores[i+i] = scoreA;
-
-                return;
-            }
-        }
+        ScoreItem s = new ScoreItem(score, name);
+        highScores.add(s);
     }
 
     public void handleMouseClick(MouseEvent e){
         if(currentPlayer.isRandomTurn()){
             digRandomTile(currentPlayer);
+            currentPlayer.setTurns(currentPlayer.getTurns() - 1);
         }else{
             int index = (10*(e.getY() / 70) + (e.getX()/70));
             System.out.print("x: " + e.getX()/70);
@@ -81,14 +81,17 @@ public class Controller {
                 gameTiles[index].reveal();
                 currentPlayer.setTurns(currentPlayer.getTurns() - 1);
             }
-            if(currentPlayer.getTurns() <= 0){
-                switchPlayer();
-            }
+
         }
+
+        if(currentPlayer.getTurns() <= 0){
+            switchPlayer();
+        }
+
         updateView();
 
         if(checkEndGame()){
-            window.setEndScreen();
+            window.setEndScreen(getWinner().getScore());
         }
 
     }
@@ -97,16 +100,44 @@ public class Controller {
      * sätter highScore skärmen till highscore arrayen
      */
     public void setHighScores(){
-        String[] temp = new String[highScores.length];
-        for (int i = 0; i < highScores.length; i++) {
-            if(highScores[i] != null){
-                temp[i] = highScores[i].toString();
+        String[] temp = new String[highScores.size()];
+        for (int i = 0; i < highScores.size(); i++) {
+            if(highScores.get(i) != null){
+                temp[i] = highScores.get(i).toString();
             }
         }
         window.setHighScores(temp);
     }
 
-    public void saveHighScores(){}
+    public void readHighScores(){
+        try(BufferedReader br = new BufferedReader(new FileReader(scoreFile))){
+            for(String line = br.readLine(); line != null; line = br.readLine()){
+                String[] temp = line.split(" ");
+                ScoreItem s = new ScoreItem(Integer.parseInt(temp[1]), temp[0]);
+                highScores.add(s);
+            }
+
+        } catch (RuntimeException | IOException e) {
+            throw new RuntimeException(e);
+        }
+        sortHighscores();
+    }
+
+    public void saveHighScores() {
+        readHighScores();
+        sortHighscores();
+
+        if(highScores.size() >= 10){
+            highScores = (ArrayList<ScoreItem>) highScores.subList(0, 10);
+        }
+        try(BufferedWriter writer = new BufferedWriter(new FileWriter(scoreFile))){
+            for(int i = 0; i < highScores.size(); i++){
+                writer.write(highScores.get(i).toString());
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     public void setupNewGame(){
         gameTiles = generateMap();
@@ -144,6 +175,7 @@ public class Controller {
         int index = rand.nextInt(gameTiles.length);
         gameTiles[index].dig(this, currentPlayer);
         gameTiles[index].reveal();
+        currentPlayer.setRandomTurn(false);
     }
 
     public Player getOpponent(Player currentPlayer) {
@@ -287,6 +319,20 @@ public class Controller {
 
     public void notifyTreasure(TreasureTile treasureTile){
         window.displayMessage(treasureTile.getFullyFoundMessage());
+    }
+
+    public void sortHighscores(){
+        for(int i = 0; i < highScores.size(); i++){
+            int min = i;
+            for(int j = i + 1; j < highScores.size(); j++){
+                if(highScores.get(min).getScore() < highScores.get(j).getScore()){
+                    min = j;
+                }
+            }
+            ScoreItem temp = highScores.get(min);
+            highScores.set(min, highScores.get(i));
+            highScores.set(i, temp);
+        }
     }
 
 }

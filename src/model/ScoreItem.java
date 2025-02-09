@@ -24,6 +24,6 @@ public class ScoreItem {
     //Ändra till något fint string format?
 
     public String toString() {
-        return name + "    " + score;
+        return name + " " + score;
     }
 }

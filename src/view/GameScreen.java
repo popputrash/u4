@@ -160,17 +160,13 @@ public class GameScreen extends JPanel {
         return true;
     }
 
-    public void gameOver(){
-        window.setEndScreen();
-    }
-
     public void setCurrentPlayer(int index){
         if(index == 0){
-            pOnePanel.setBackground(Color.cyan.darker());
+            pOnePanel.setBackground(Color.PINK.darker());
             pTwoPanel.setBackground(Color.DARK_GRAY.darker());
         }else{
             pOnePanel.setBackground(Color.DARK_GRAY.darker());
-            pTwoPanel.setBackground(Color.cyan.darker());
+            pTwoPanel.setBackground(Color.PINK.darker());
 
         }
     }

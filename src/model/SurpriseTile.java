@@ -16,6 +16,7 @@ public class SurpriseTile extends GameTile{
 
     @Override
     public void dig(Controller controller, Player currentPlayer) {
+        controller.notifySuprise(this);
         switch(type){
             case 1:
                 currentPlayer.addCrew();
@@ -31,7 +32,6 @@ public class SurpriseTile extends GameTile{
                 currentPlayer.setRandomTurn(true);
                 break;
         }
-        controller.notifySuprise(this);
 
     }
 

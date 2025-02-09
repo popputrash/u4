@@ -26,7 +26,7 @@ public class StartScreen extends JPanel {
      * @param height höjd på panel
      * @param window Fönstret panel sitter på
      */
-    public StartScreen(int width, int height, Window window){
+    public StartScreen(int width, int height, Window window) {
 
         super(null);
         this.setSize(width, height);

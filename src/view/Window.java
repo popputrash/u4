@@ -56,10 +56,11 @@ public class Window extends JFrame {
         this.add(currentScreen);
         this.repaint();
     }
-    public void setEndScreen(){
+    public void setEndScreen(int score){
         this.remove(currentScreen);
         this.setWindowSize(500,500);
         setCurrentScreen(EndScreen);
+        EndScreen.setScore(score);
         this.add(currentScreen);
         this.repaint();
     }
@@ -92,6 +93,10 @@ public class Window extends JFrame {
 
     public void displayMessage(String message){
         JOptionPane.showMessageDialog(null, message);
+    }
+
+    public String getUsername(){
+        return EndScreen.getUsername();
     }
 
 }
