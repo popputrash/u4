@@ -133,6 +133,7 @@ public class Controller {
         try(BufferedWriter writer = new BufferedWriter(new FileWriter(scoreFile))){
             for(int i = 0; i < highScores.size(); i++){
                 writer.write(highScores.get(i).toString());
+                writer.newLine();
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
