@@ -22,7 +22,7 @@ public class TreasureTile extends GameTile {
     }
 
     public String getFullyFoundMessage(){
-        return "You found a the last piece of treasure and was awarded 100 points!";
+        return "You found a the last piece of a treasure and was awarded 100 points!";
     }
 
 }
