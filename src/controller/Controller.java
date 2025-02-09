@@ -3,7 +3,6 @@ import view.*;
 import model.*;
 import view.Window;
 
-import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.io.*;
 import java.util.ArrayList;
@@ -25,7 +24,6 @@ public class Controller {
         readHighScores();
         window = new Window("Skattjakt", this);
         setHighScores();
-        highScores = new ArrayList<ScoreItem>();
         playerList = new ArrayList<Player>();
         playerList.add(new Player());
         playerList.add(new Player());
@@ -57,14 +55,14 @@ public class Controller {
                 break;
             case SAVE:
                 addHighScore(window.getUsername(), getWinner().getScore());
-                saveHighScores();
-                setHighScores();
                 window.setMenuScreen();
+                setHighScores();
         }
     }
     public void addHighScore(String name, int score){
         ScoreItem s = new ScoreItem(score, name);
         highScores.add(s);
+        saveHighScores();
     }
 
     public void handleMouseClick(MouseEvent e){
@@ -73,9 +71,6 @@ public class Controller {
             currentPlayer.setTurns(currentPlayer.getTurns() - 1);
         }else{
             int index = (10*(e.getY() / 70) + (e.getX()/70));
-            System.out.print("x: " + e.getX()/70);
-            System.out.print(", y: " + e.getY()/70);
-            System.out.println(", Index: " + index);
             if(!gameTiles[index].isFound()){
                 gameTiles[index].dig(this, currentPlayer);
                 gameTiles[index].reveal();
@@ -100,6 +95,7 @@ public class Controller {
      * sätter highScore skärmen till highscore arrayen
      */
     public void setHighScores(){
+        readHighScores();
         String[] temp = new String[highScores.size()];
         for (int i = 0; i < highScores.size(); i++) {
             if(highScores.get(i) != null){
@@ -110,6 +106,7 @@ public class Controller {
     }
 
     public void readHighScores(){
+        highScores.clear();
         try(BufferedReader br = new BufferedReader(new FileReader(scoreFile))){
             for(String line = br.readLine(); line != null; line = br.readLine()){
                 String[] temp = line.split(" ");
@@ -124,11 +121,10 @@ public class Controller {
     }
 
     public void saveHighScores() {
-        readHighScores();
         sortHighscores();
 
-        if(highScores.size() >= 10){
-            highScores = (ArrayList<ScoreItem>) highScores.subList(0, 10);
+        if(highScores.size() > 10){
+            highScores.subList(0,10);
         }
         try(BufferedWriter writer = new BufferedWriter(new FileWriter(scoreFile))){
             for(int i = 0; i < highScores.size(); i++){
@@ -147,9 +143,9 @@ public class Controller {
         playerList.add(new Player());
         playerList.add(new Player());
 
-        for(GameTile tile : gameTiles){
-            tile.preview();
-        }
+        //for(GameTile tile : gameTiles){
+        //    tile.preview();
+        //}
         currentPlayer = playerList.get(0);
 
     }
