@@ -15,7 +15,7 @@ public class TreasureTile extends GameTile {
     public void dig(Controller controller, Player player) {
         group.decrementTilesRemaining();
         if(group.isFullyFound()){
-            player.addScore(100);
+            player.addScore(group.getSize() * 100);
             controller.notifyTreasure(this);
 
         }

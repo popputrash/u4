@@ -10,11 +10,13 @@ public class TreasureGroup {
     private ArrayList<TreasureTile> treasures;
     private int tilesRemaining;
     private int shape[][];
+    private int size;
 
     public TreasureGroup(int id) {
         this.treasures = new ArrayList<>();
         shape = generateShapeFromId(id);
         tilesRemaining = initialAmountOfTreasures();
+        this.size = initialAmountOfTreasures();
 
     }
 
@@ -115,5 +117,9 @@ public class TreasureGroup {
 
     public int[][] getShape() {
         return shape;
+    }
+
+    public int getSize() {
+        return size;
     }
 }
