@@ -54,15 +54,6 @@ public class GameScreen extends JPanel {
         this.add(btnMenu);
 
         //New game button
-        btnNewGame = new JButton("NYTT SPEL");
-        btnNewGame.setEnabled(true);
-        btnNewGame.setSize(150,20);
-        btnNewGame.setLocation(790,700);
-        btnNewGame.setFont(window.getBtnFont());
-        btnNewGame.setBackground(Color.green.darker());
-        btnNewGame.setForeground(Color.BLACK);
-        btnNewGame.addActionListener(l -> window.btnPressed(ButtonType.NEWGAMEBUTTON));
-        this.add(btnNewGame);
 
         //Stat panel player 1
         pOnePanel = new JPanel(null);

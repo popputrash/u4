@@ -75,6 +75,9 @@ public class EndScreen extends JPanel {
     }
 
     public void setScore(int score) {
+        if(scoreLbl != null) {
+            this.remove(scoreLbl);
+        }
         scoreLbl = new JLabel("Score: " + score);
         scoreLbl.setSize(300, 50);
         scoreLbl.setLocation(110, 150);

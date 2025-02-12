@@ -120,7 +120,7 @@ public class Controller {
     public void setHighScores(){
         readHighScores();
         String[] temp = new String[highScores.size()];
-        for (int i = 0; i < highScores.size(); i++) {
+        for (int i = 0; i < 10; i++) {
             if(highScores.get(i) != null){
                 temp[i] = highScores.get(i).toString();
             }

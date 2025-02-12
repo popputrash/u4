@@ -1,5 +1,3 @@
-bror 1020
-max 770
-othman 300
-lilo 300
-elias 300
+annika 1300
+sofia 1100
+maximilian1 1100
