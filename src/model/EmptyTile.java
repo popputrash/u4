@@ -11,11 +11,12 @@ import java.awt.*;
 public class EmptyTile extends GameTile{
 
     public EmptyTile() {
-        super(Color.gray, "");
+        super("EMPTY");
     }
 
     @Override
     public void dig(Controller controller, Player player) {
+        super.found = true;
 
     }
 

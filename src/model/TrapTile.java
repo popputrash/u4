@@ -16,7 +16,7 @@ public class TrapTile extends GameTile{
      * @author Maximilian Andersen & Elias Bränsström
      */
     public TrapTile(int type){
-        super(Color.RED.darker(), "TRAP");
+        super("TRAP");
         if( type > 3 ){
             this.type = 3;
         }else if(type < 1){
@@ -33,6 +33,7 @@ public class TrapTile extends GameTile{
      */
     @Override
     public void dig(Controller controller, Player currentPlayer) {
+        super.found = true;
         switch (type){
             // blir av med upp till 100p
             case 1:

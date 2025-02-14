@@ -1,6 +1,5 @@
 package view;
 import controller.Controller;
-import model.GameTile;
 
 import javax.swing.*;
 import java.awt.*;
@@ -41,10 +40,10 @@ public class Window extends JFrame {
         controller.btnPressed(button);
     }
 
-    public void setGameScreen(GameTile[] gameTiles){
+    public void setGameScreen(){
         this.remove(currentScreen);
         this.setWindowSize(1000,830);
-        gameScreen = new GameScreen(500,500, this,  controller ,gameTiles);
+        gameScreen = new GameScreen(500,500, this,  controller);
         setCurrentScreen(gameScreen);
         this.add(currentScreen);
         this.repaint();
@@ -71,13 +70,6 @@ public class Window extends JFrame {
     public void setWindowSize(int width, int height){
         this.setSize(width,height);
     }
-    public void setup(GameTile[] gameTiles){
-
-        gameScreen = new GameScreen(500,500, this,  controller ,gameTiles);
-    }
-    public void clearGamePanel(){
-        //gameScreen.clearGamePanel();
-    }
 
     public void setHighScores (String[] highScores){
         startScreen.setHighScores(highScores);
@@ -97,6 +89,10 @@ public class Window extends JFrame {
 
     public String getUsername(){
         return EndScreen.getUsername();
+    }
+
+    public void revealTile(int index, String type){
+        gameScreen.revealTile(index, type);
     }
 
 }

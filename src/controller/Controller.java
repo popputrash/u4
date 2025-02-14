@@ -47,7 +47,7 @@ public class Controller {
             case STARTBUTTON:
                 System.out.println("start");
                 setupNewGame();
-                window.setGameScreen(gameTiles);
+                window.setGameScreen();
                 updateView();
                 break;
             case EXITBUTTON:
@@ -61,7 +61,7 @@ public class Controller {
             case NEWGAMEBUTTON:
                 System.out.println("new game");
                 setupNewGame();
-                window.setGameScreen(gameTiles);
+                window.setGameScreen();
                 updateView();
                 break;
             case SAVE:
@@ -94,11 +94,10 @@ public class Controller {
         }else{
             int index = (10*(e.getY() / 70) + (e.getX()/70));
             if(!gameTiles[index].isFound()){
-                gameTiles[index].reveal();
+                window.revealTile(index, gameTiles[index].getTypeString());
                 gameTiles[index].dig(this, currentPlayer);
                 currentPlayer.setTurns(currentPlayer.getTurns() - 1);
             }
-
         }
 
         if(currentPlayer.getTurns() <= 0){
@@ -178,9 +177,6 @@ public class Controller {
         playerList.add(new Player());
         playerList.add(new Player());
 
-        for(GameTile tile : gameTiles){
-            tile.preview();
-        }
         currentPlayer = playerList.get(0);
 
     }
@@ -210,7 +206,7 @@ public class Controller {
         }
         TreasureTile temp = tg.getRandomTile();
         temp.dig(this, currentPlayer);
-        temp.reveal();
+        window.revealTile(index, temp.getTypeString());
         if(checkEndGame()){
             window.setEndScreen(getWinner().getScore());
         }
@@ -226,7 +222,7 @@ public class Controller {
         Random rand = new Random();
         int index = rand.nextInt(gameTiles.length);
         gameTiles[index].dig(this, currentPlayer);
-        gameTiles[index].reveal();
+        window.revealTile(index, gameTiles[index].getTypeString());
         currentPlayer.setRandomTurn(false);
     }
 

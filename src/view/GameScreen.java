@@ -1,8 +1,8 @@
 package view;
 
 import controller.Controller;
-import model.*;
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -12,11 +12,11 @@ public class GameScreen extends JPanel {
     private JLabel mainTitle, pOne, pTwo, pOneScore, pOneCrew, pTwoCrew, pTwoScore;
     private JPanel gamePanel, pOnePanel,pTwoPanel;
     private JButton btnMenu, btnNewGame;
-    private GameTile[] gameTiles = new GameTile[100];
+    private JPanel[] gamePanels = new JPanel[100];
     private Controller controller;
 
 
-    public GameScreen(int width, int height, Window window, Controller controller, GameTile[] gameTiles) {
+    public GameScreen(int width, int height, Window window, Controller controller) {
 
         super(null);
         this.setSize(width, height);
@@ -117,7 +117,7 @@ public class GameScreen extends JPanel {
         this.add(pOnePanel);
         this.add(pTwoPanel);
 
-        addTiles(gameTiles);
+        addTiles();
 
         gamePanel.addMouseListener(new MouseListener() {
 
@@ -135,11 +135,13 @@ public class GameScreen extends JPanel {
      * @param ska vara en färdig array som bara adderas
      */
 
-    public void addTiles(GameTile[] gameTiles){
-        for(GameTile gameTile : gameTiles){
-            gamePanel.add(gameTile.getPanel());
+    public void addTiles(){
+        for(int i = 0; i < gamePanels.length; i++){
+            gamePanels[i] = new JPanel();
+            gamePanels[i].setBackground(Color.GREEN.darker());
+            gamePanels[i].setBorder(new LineBorder(Color.yellow));
+            gamePanel.add(gamePanels[i]);
         }
-        gamePanel.repaint();
     }
 
     public void setCurrentPlayer(int index){
@@ -161,5 +163,28 @@ public class GameScreen extends JPanel {
         repaint();
     }
 
+    public void revealTile(int index, String type){
+        switch(type){
+            case "EMPTY":
+                gamePanels[index].setBorder(new LineBorder(Color.gray));
+                gamePanels[index].setBackground(Color.gray.darker());
+                break;
+            case "SUPRISE":
+                gamePanels[index].setBorder(new LineBorder(Color.gray));
+                gamePanels[index].setBackground(Color.blue.darker());
+                break;
+            case "TRAP":
+                gamePanels[index].setBorder(new LineBorder(Color.gray));
+                gamePanels[index].setBackground(Color.red);
+                break;
+            case "TREASURE":
+                gamePanels[index].setBorder(new LineBorder(Color.gray));
+                gamePanels[index].setBackground(Color.yellow);
+
+                break;
+        }
+
+        gamePanels[index].repaint();
+    }
 
 }

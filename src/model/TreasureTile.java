@@ -16,7 +16,7 @@ public class TreasureTile extends GameTile {
      * @author Maximilian Andersen & Elias Brännström
      */
     public TreasureTile(TreasureGroup group) {
-        super(Color.yellow, "TREASURE");
+        super("TREASURE");
         this.group = group;
     }
 
@@ -28,6 +28,7 @@ public class TreasureTile extends GameTile {
      */
     @Override
     public void dig(Controller controller, Player player) {
+        super.found = true;
         group.decrementTilesRemaining();
         if(group.isFullyFound()){
             player.addScore(group.getSize() * 100);

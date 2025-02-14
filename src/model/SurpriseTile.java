@@ -15,7 +15,7 @@ public class SurpriseTile extends GameTile{
      * @param type
      */
     public SurpriseTile(int type){
-        super(Color.blue.darker(), "SURPRISE");
+        super("SURPRISE");
         if( type > 4 || type < 1 ){
             this.type = 2;
         }else
@@ -30,6 +30,7 @@ public class SurpriseTile extends GameTile{
      */
     @Override
     public void dig(Controller controller, Player currentPlayer) {
+        super.found = true;
         controller.notifySuprise(this);
         switch(type){
             case 1:
