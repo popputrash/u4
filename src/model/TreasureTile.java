@@ -28,11 +28,11 @@ public class TreasureTile extends GameTile {
      */
     @Override
     public void dig(Controller controller, Player player) {
-        super.found = true;
+        setFound(true);
         group.decrementTilesRemaining();
         if(group.isFullyFound()){
-            player.addScore(group.getSize() * 100);
-            controller.notifyTreasure(this);
+            player.addScore(group.getScore());
+            controller.notifyTreasure(this.getFullyFoundMessage());
 
         }
     }
@@ -43,7 +43,7 @@ public class TreasureTile extends GameTile {
      * @author Maximilian Andersen & Elias Brännström
      */
     public String getFullyFoundMessage(){
-        return "You found a the last piece of a treasure and was awarded " + group.getSize() * 100 + "points!";
+        return "You found a the last piece of a treasure and was awarded " + group.getScore() + "points!";
     }
 
 }

@@ -108,6 +108,10 @@ public class Player {
         return turns;
     }
 
+    public void addTurns(int turns) {
+        this.turns += turns;
+    }
+
     /**
      * setter för turns
      * @param turns

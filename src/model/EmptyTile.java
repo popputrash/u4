@@ -16,7 +16,7 @@ public class EmptyTile extends GameTile{
 
     @Override
     public void dig(Controller controller, Player player) {
-        super.found = true;
+        setFound(true);
 
     }
 

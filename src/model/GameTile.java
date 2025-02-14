@@ -10,8 +10,8 @@ import java.awt.*;
  * @author Maximilian Andersen & Elias Brännström
  */
 public abstract class GameTile {
-    String typeString;
-    boolean found;
+    private String typeString;
+    private boolean found;
 
     /**
      * Konstruktor för GameTile
@@ -29,6 +29,10 @@ public abstract class GameTile {
      */
     public String getTypeString() {
         return typeString;
+    }
+
+    public void setFound(boolean found) {
+        this.found = found;
     }
 
     /**

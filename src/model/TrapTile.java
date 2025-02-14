@@ -33,7 +33,8 @@ public class TrapTile extends GameTile{
      */
     @Override
     public void dig(Controller controller, Player currentPlayer) {
-        super.found = true;
+        setFound(true);
+        controller.notifyTrap(this.getTrapMessage());
         switch (type){
             // blir av med upp till 100p
             case 1:
@@ -51,7 +52,6 @@ public class TrapTile extends GameTile{
                 break;
         }
 
-        controller.notifyTrap(this);
     }
 
     /**

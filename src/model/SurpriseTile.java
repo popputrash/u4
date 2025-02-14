@@ -30,20 +30,17 @@ public class SurpriseTile extends GameTile{
      */
     @Override
     public void dig(Controller controller, Player currentPlayer) {
-        super.found = true;
-        controller.notifySuprise(this);
+        setFound(true);
+        controller.notifySuprise(this.getSupriseMessage());
         switch(type){
             case 1:
                 currentPlayer.addCrew();
                 break;
             case 2:
                 int extra = currentPlayer.getCrew();
-                controller.handleExtraTurns(currentPlayer, extra);
+                currentPlayer.addTurns(extra);
                 break;
             case 3:
-                controller.digRandomTreasureTile(currentPlayer);
-                break;
-            case 4:
                 currentPlayer.setRandomTurn(true);
                 break;
         }
@@ -62,8 +59,6 @@ public class SurpriseTile extends GameTile{
             case 2:
                 return "You got 1 extra turn for each crewmember!";
             case 3:
-                return "We dug up a random treasure for u!";
-            case 4:
                 return "Your next turn will be random!";
             default:
                 return "Default surprise message!";

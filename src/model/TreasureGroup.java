@@ -74,6 +74,10 @@ public class TreasureGroup {
         tilesRemaining--;
     }
 
+    public int getScore(){
+        return size * 100;
+    }
+
     /**
      * Genererar en shape från ett id
      * @param id

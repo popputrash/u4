@@ -84,10 +84,11 @@ public class Controller {
 
     /**
      * Metod för att hantera musklick i gamescreen, egenligen en gameloop
-     * @param e, information från musen.
+     * @param index, vilken gamepanel som är vald.
      * @author Maximilian Andersen & Elias Brännström
      */
     public void handleMouseClick(int index){
+
         if(currentPlayer.isRandomTurn()) {
             index = digRandomTile();
             currentPlayer.setRandomTurn(false);
@@ -104,10 +105,6 @@ public class Controller {
         }
 
         updateView();
-
-        if(checkEndGame()){
-            window.setEndScreen(getWinner().getScore());
-        }
 
     }
 
@@ -181,16 +178,6 @@ public class Controller {
     }
 
     /**
-     * Metod för att hantera ifall en får extra drag.
-     * @param currentPlayer
-     * @param extraTurns
-     * @author Maximilian Andersen & Elias Brännström
-     */
-    public void handleExtraTurns(Player currentPlayer, int extraTurns) {
-        currentPlayer.setTurns(currentPlayer.getTurns() + extraTurns);
-    }
-
-    /**
      * Metod för att grava upp en random treasure till currentPlayer.
      * @param currentPlayer
      * @author Maximilian Andersen & Elias Brännström
@@ -252,6 +239,10 @@ public class Controller {
         window.updateCurrentPlayer(playerList.indexOf(currentPlayer));
         window.updatePlayerInfo(playerList.get(0).getScore(), playerList.get(1).getScore(),
                 playerList.get(0).getCrew(), playerList.get(1).getCrew());
+
+        if(checkEndGame()){
+            window.setEndScreen(getWinner().getScore());
+        }
 
     }
 
@@ -338,7 +329,7 @@ public class Controller {
                 if(temp[posX][posY] != null)spotFound = false;
 
             }
-            temp[posX][posY] = new SurpriseTile(rand.nextInt(5));
+            temp[posX][posY] = new SurpriseTile(rand.nextInt(3));
 
         }
 
@@ -387,29 +378,29 @@ public class Controller {
 
     /**
      * Metod för att notifera spelare om en Suprise
-     * @param surpriseTile
+     * @param message
      * @author Maximilian Andersen & Elias Brännström
      */
-    public void notifySuprise(SurpriseTile surpriseTile){
-        window.displayMessage(surpriseTile.getSupriseMessage());
+    public void notifySuprise(String message){
+        window.displayMessage(message);
     }
 
     /**
      * Metod för att notifiera spelare om en Trap
-     * @param trapTile
+     * @param message
      * @author Maximilian Andersen & Elias Brännström
      */
-    public void notifyTrap(TrapTile trapTile){
-        window.displayMessage(trapTile.getTrapMessage());
+    public void notifyTrap(String message){
+        window.displayMessage(message);
     }
 
     /**
      * Metod för att notifiera spelare om en Treasure
-     * @param treasureTile
+     * @param message
      * @author Maximilian Andersen & Elias Brännström
      */
-    public void notifyTreasure(TreasureTile treasureTile){
-        window.displayMessage(treasureTile.getFullyFoundMessage());
+    public void notifyTreasure(String message){
+        window.displayMessage(message);
     }
 
     /**
