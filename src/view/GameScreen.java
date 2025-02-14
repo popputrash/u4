@@ -122,7 +122,7 @@ public class GameScreen extends JPanel {
         gamePanel.addMouseListener(new MouseListener() {
 
             public void mouseClicked(MouseEvent e) {
-                controller.handleMouseClick(e);
+                controller.handleMouseClick((10*(e.getY() / 70) + (e.getX()/70)));
             }
             public void mousePressed(MouseEvent e) {}
             public void mouseReleased(MouseEvent e) {}

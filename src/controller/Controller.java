@@ -87,11 +87,10 @@ public class Controller {
      * @param e, information från musen.
      * @author Maximilian Andersen & Elias Brännström
      */
-    public void handleMouseClick(MouseEvent e){
-        int index = (10*(e.getY() / 70) + (e.getX()/70));
-
+    public void handleMouseClick(int index){
         if(currentPlayer.isRandomTurn()) {
             index = digRandomTile();
+            currentPlayer.setRandomTurn(false);
         }
 
         if(!gameTiles[index].isFound()){
@@ -99,7 +98,6 @@ public class Controller {
             gameTiles[index].dig(this, currentPlayer);
             currentPlayer.setTurns(currentPlayer.getTurns() - 1);
         }
-
 
         if(currentPlayer.getTurns() <= 0){
             switchPlayer();
