@@ -88,17 +88,18 @@ public class Controller {
      * @author Maximilian Andersen & Elias Brännström
      */
     public void handleMouseClick(MouseEvent e){
-        if(currentPlayer.isRandomTurn()){
-            digRandomTile(currentPlayer);
-            currentPlayer.setTurns(currentPlayer.getTurns() - 1);
-        }else{
-            int index = (10*(e.getY() / 70) + (e.getX()/70));
-            if(!gameTiles[index].isFound()){
-                window.revealTile(index, gameTiles[index].getTypeString());
-                gameTiles[index].dig(this, currentPlayer);
-                currentPlayer.setTurns(currentPlayer.getTurns() - 1);
-            }
+        int index = (10*(e.getY() / 70) + (e.getX()/70));
+
+        if(currentPlayer.isRandomTurn()) {
+            index = digRandomTile();
         }
+
+        if(!gameTiles[index].isFound()){
+            window.revealTile(index, gameTiles[index].getTypeString());
+            gameTiles[index].dig(this, currentPlayer);
+            currentPlayer.setTurns(currentPlayer.getTurns() - 1);
+        }
+
 
         if(currentPlayer.getTurns() <= 0){
             switchPlayer();
@@ -214,16 +215,16 @@ public class Controller {
     }
 
     /**
-     * Metod för att gräva upp en random tile åt currentPlater
-     * @param currentPlayer
+     * Metod för att gräva upp en random tile åt currentPlayer
      * @author Maximilian Andersen & Elias Brännström
      */
-    public void digRandomTile(Player currentPlayer) {
+    public int digRandomTile() {
         Random rand = new Random();
-        int index = rand.nextInt(gameTiles.length);
-        gameTiles[index].dig(this, currentPlayer);
-        window.revealTile(index, gameTiles[index].getTypeString());
-        currentPlayer.setRandomTurn(false);
+        int i = rand.nextInt(gameTiles.length);
+        while (gameTiles[i].isFound()) {
+            i = rand.nextInt(gameTiles.length);
+        }
+        return i;
     }
 
     /**
